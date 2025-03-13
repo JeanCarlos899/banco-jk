@@ -35,6 +35,7 @@ export const LoginScreen: React.FC = () => {
 
     setLoading(true);
 
+    // Tenta fazer login
     try {
       const success = await signIn(cleanCpf, password);
 

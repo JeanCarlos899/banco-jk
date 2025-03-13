@@ -14,8 +14,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const getUserByCpf = async (cpf: string): Promise<User | null> => {
   try {
+    // usersRef é uma referência à coleção 'users'
     const usersRef = collection(db, 'users');
+    // Consulta para buscar um usuário com o CPF informado
     const q = query(usersRef, where('cpf', '==', cpf));
+    // Executa a consulta
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {

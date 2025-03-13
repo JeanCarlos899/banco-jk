@@ -22,7 +22,7 @@ export const transferPix = async (
     if (!fromUserDoc.exists()) {
       return false;
     }
-
+    
     const fromUserData = fromUserDoc.data() as User;
 
     // Verifica se o usuário tem saldo suficiente

@@ -17,6 +17,7 @@ export const login = async (
   try {
     const usersRef = collection(db, 'users');
     const q = query(usersRef, where('cpf', '==', cpf));
+    // Executa a consulta e retorna os documentos
     const querySnapshot = await getDocs(q);
 
     if (querySnapshot.empty) {
@@ -44,6 +45,7 @@ export const logout = async (): Promise<void> => {
   await AsyncStorage.removeItem('@BancoJK:user');
 };
 
+// Obtém o usuário atualizado do Firebase e atualiza o AsyncStorage
 export const getCurrentUser = async (): Promise<User | null> => {
   try {
     const userJson = await AsyncStorage.getItem('@BancoJK:user');
@@ -54,14 +56,13 @@ export const getCurrentUser = async (): Promise<User | null> => {
 
     const storedUser = JSON.parse(userJson) as User;
 
-    // Busca dados atualizados do Firebase
     const userRef = doc(db, 'users', storedUser.id);
     const userDoc = await getDoc(userRef);
 
     if (!userDoc.exists()) {
       return null;
     }
-
+  // Converte os dados do documento em um objeto User
     const userData = userDoc.data() as User;
     const updatedUser = { ...userData, id: userDoc.id };
 
